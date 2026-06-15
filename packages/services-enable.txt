@@ -1,0 +1,12 @@
+# SERVICIOS A HABILITAR
+# Ejecutar con: xargs -a services-enable.txt sudo systemctl enable --now
+
+docker.service
+libvirtd.service
+tailscaled.service
+bluetooth.service
+iwd.service
+cups.service
+ufw.service
+systemd-resolved.service
+systemd-networkd.service

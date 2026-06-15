@@ -1,0 +1,33 @@
+# PAQUETES A ELIMINAR (Omarchy bloat que no usas)
+# Ejecutar con: sudo pacman -Rns --noconfirm $(< packages/remove-bloat.txt)
+
+# Electron apps / pesados que no usas
+# aether
+# blanket
+
+# Juegos (si no juegas)
+steam
+
+# Editing de video/foto (si no usas)
+kdenlive
+
+# Dispositivos específicos (solo si no tienes ese hardware)
+asusctl
+dell-xps-touchpad-haptics-dkms
+macbook12-spi-driver-dkms
+surface-drivers
+framework16-drivers
+
+# LibreOffice (si prefieres solo Typora/Obsidian)
+# libreoffice-fresh
+
+# Thunderbird (si usas webmail)
+# thunderbird
+
+# Flatpak (si no usas flatpaks)
+# flatpak
+
+# Impresoras (si no tienes)
+cups
+cups-pdf
+system-config-printer

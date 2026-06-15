@@ -1,0 +1,38 @@
+# AUR PACKAGES
+# Instalar con: yay -S --needed - < packages/aur.txt
+
+# --- Terminal ---
+alacritty-smooth-cursor-git
+
+# --- Dev Tools ---
+beekeeper-studio-bin
+pear-desktop
+# tabularis-bin
+
+# --- Crypto ---
+# featherwallet-bin
+
+# --- Security ---
+burpsuite
+enum4linux
+nessus
+netdiscover
+joomscan
+smtp-user-enum-git
+# sublist3r-git
+wafw00f
+whatweb
+rockyou
+heimdall-git
+packettracer
+
+# --- Hardware ---
+g203-led-git
+
+# --- Desktop ---
+# zen-browser-bin
+tor-browser-bin
+# antigravity
+# mainstream-quickshell-git
+# gpu-screen-recorder-gtk
+wacli

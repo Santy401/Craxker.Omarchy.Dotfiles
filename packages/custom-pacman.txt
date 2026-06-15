@@ -1,0 +1,124 @@
+# EXTRA PACMAN PACKAGES (no incluidos en Omarchy base)
+# Instalar con: sudo pacman -S --needed - < packages/custom-pacman.txt
+
+# --- Shell & Terminal ---
+ghostty
+thefuck
+zoxide
+fzf
+fd
+bat
+eza
+duf
+dust
+procs
+tldr
+lolcat
+cmatrix
+cowsay
+screen
+
+# --- Dev Tools ---
+bun
+pnpm
+go
+neovim
+yazi
+zed
+kubectl
+minikube
+docker
+docker-compose
+docker-buildx
+mise
+postgresql
+mariadb-clients
+lazygit
+lazydocker
+git
+github-cli
+ghostty
+nodejs
+npm
+
+# --- Network & Security ---
+tailscale
+# openvpn
+wireshark-qt
+nmap
+metasploit
+hydra
+john
+sqlmap
+# gobuster
+ncrack
+sshpass
+sslscan
+whois
+traceroute
+tcpdump
+dnsmasq
+bind
+openbsd-netcat
+proxychains-ng
+tor
+zenmap
+socat
+netcat
+miniupnpc
+arp-scan
+dnsutils
+
+# --- Virtualization ---
+qemu-desktop
+virt-manager
+libvirt
+edk2-ovmf
+virtualbox
+virtualbox-host-dkms
+
+# --- Media & Graphics ---
+# steam
+wine
+libreoffice-fresh
+# obs-studio
+# kdenlive
+imv
+mpv
+# pinta
+# foliate
+blanket
+# feeluown-ytmusic
+localsend
+thunderbird
+evince
+# xournalpp
+obsidian
+# typora
+
+# --- Bluetooth & Peripherals ---
+blueman
+piper
+libratbag
+ratbagd
+
+# --- System ---
+dhcpcd
+networkmanager
+iwd
+avahi
+nss-mdns
+cups
+cups-pdf
+ufw
+ufw-docker
+thermald
+power-profiles-daemon
+plymouth
+zram-generator
+btrfs-progs
+exfatprogs
+ntfs-3g
+inxi
+lm_sensors
+flatpak
