@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Craxker
+Comment=A dark theme with Craxker terminal colors
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Craxker
+MetacityTheme=Craxker
+IconTheme=Yaru-prussiangreen-dark
+ButtonLayout=:minimize,maximize,close
