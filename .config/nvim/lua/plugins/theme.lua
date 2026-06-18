@@ -1,0 +1,1 @@
+/home/craxker/.config/omarchy/current/theme/neovim.lua

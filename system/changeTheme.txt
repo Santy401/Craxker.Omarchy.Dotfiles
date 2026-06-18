@@ -1,0 +1,1 @@
+changes from "Theme=omarchy" to "Theme=craxker" which is inside "/etc/plymouth/plymouthd.conf"
