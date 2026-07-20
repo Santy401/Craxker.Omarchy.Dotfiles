@@ -267,8 +267,8 @@ while True:
         for w in clients:
             if w.get('floating') and w.get('workspace', {}).get('id') == workspace_id:
                 addr = w['address']
-                nx = w['at'][0] + idx
-                ny = w['at'][1] + idy
+                nx = w['at'][0] - idx
+                ny = w['at'][1] - idy
                 subprocess.Popen(['hyprctl', 'dispatch', 'movewindowpixel', 
                                  f'exact {nx} {ny},address:{addr}'],
                                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
