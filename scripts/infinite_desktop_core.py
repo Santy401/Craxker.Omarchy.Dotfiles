@@ -6,11 +6,10 @@ kbd_dev   = sys.argv[1]
 mouse_dev = sys.argv[2]
 speed     = float(sys.argv[3])
 EVENT_SIZE = struct.calcsize('llHHi')
-EV_KEY=1; EV_REL=2; REL_X=0; REL_Y=1
+EV_KEY=1; EV_REL=2; REL_X=0; REL_Y=1; REL_WHEEL=8
 KEY_LEFTMETA=125; KEY_RIGHTMETA=126
 KEY_LEFTALT=56; KEY_RIGHTALT=100
 KEY_LEFTCTRL=29; KEY_RIGHTCTRL=97
-KEY_LEFT=105; KEY_RIGHT=106
 BTN_LEFT=272
 
 STATE_FILE = "/tmp/infinite-desktop-state" #uhh i hate my life
@@ -22,7 +21,8 @@ lock=threading.Lock()
 super_pressed=False; alt_pressed=False; ctrl_pressed=False; btn_left=False
 acc_x=0.0; acc_y=0.0
 last_nav_time = 0
-NAV_COOLDOWN = 0.2
+NAV_COOLDOWN = 0.1
+last_focused_addr = None
 
 def read_inverted():
     try:
@@ -102,7 +102,7 @@ def pan_to_window(floating_windows, target_addr, center_x, center_y):
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 def change_focus(direction):
-    global last_nav_time
+    global last_nav_time, last_focused_addr
     
     current_time = time.time()
     if current_time - last_nav_time < NAV_COOLDOWN:
@@ -118,20 +118,24 @@ def change_focus(direction):
         if len(floating_windows) <= 1:
             return
         
-        focused = get_focused_window()
-        if not focused or not focused.get('address'):
-            if floating_windows:
-                center_x, center_y = get_monitor_center()
-                first_window = floating_windows[0]
-                if is_protected_app(first_window):
-                    for w in floating_windows:
-                        if not is_protected_app(w):
-                            first_window = w
-                            break
-                pan_to_window(floating_windows, first_window['address'], center_x, center_y)
+        current_addr = last_focused_addr
+        if not current_addr:
+            focused = get_focused_window()
+            if focused and focused.get('address'):
+                current_addr = focused['address']
+        
+        if not current_addr:
+            center_x, center_y = get_monitor_center()
+            first_window = floating_windows[0]
+            if is_protected_app(first_window):
+                for w in floating_windows:
+                    if not is_protected_app(w):
+                        first_window = w
+                        break
+            pan_to_window(floating_windows, first_window['address'], center_x, center_y)
+            last_focused_addr = first_window['address']
             return
         
-        current_addr = focused['address']
         current_index = -1
         for i, w in enumerate(floating_windows):
             if w['address'] == current_addr:
@@ -139,6 +143,9 @@ def change_focus(direction):
                 break
         
         if current_index == -1:
+            center_x, center_y = get_monitor_center()
+            pan_to_window(floating_windows, floating_windows[0]['address'], center_x, center_y)
+            last_focused_addr = floating_windows[0]['address']
             return
         
         if direction == 'right':
@@ -162,8 +169,8 @@ def change_focus(direction):
                 return
         
         center_x, center_y = get_monitor_center()
-        floating_windows_updated = get_floating_windows(workspace_id)
-        pan_to_window(floating_windows_updated, new_window['address'], center_x, center_y)
+        pan_to_window(floating_windows, new_window['address'], center_x, center_y)
+        last_focused_addr = new_window['address']
         
     except:
         pass
@@ -189,12 +196,6 @@ def kbd_reader():
                 alt_pressed = (value == 1)
             elif code in (KEY_LEFTCTRL, KEY_RIGHTCTRL):
                 ctrl_pressed = (value == 1)
-            
-            if alt_pressed and super_pressed and not ctrl_pressed:
-                if code == KEY_RIGHT and value == 1:
-                    threading.Thread(target=change_focus, args=('right',), daemon=True).start()
-                elif code == KEY_LEFT and value == 1:
-                    threading.Thread(target=change_focus, args=('left',), daemon=True).start()
 
 def mouse_reader():
     global acc_x, acc_y, btn_left
@@ -216,6 +217,9 @@ def mouse_reader():
                         acc_x += value * speed * sign
                     elif code == REL_Y:
                         acc_y += value * speed * sign
+                elif super_pressed and not alt_pressed and code == REL_WHEEL and value != 0:
+                    direction = 'right' if value > 0 else 'left'
+                    threading.Thread(target=change_focus, args=(direction,), daemon=True).start()
                 else:
                     # We only clean if we're not dragging.
                     if not (super_pressed and alt_pressed and btn_left):
